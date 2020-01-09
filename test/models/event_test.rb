@@ -19,5 +19,4 @@ class EventTest < ActiveSupport::TestCase
     assert_equal 7, availabilities.length
     # An additional test might be to check Daylight Savings Time. 
   end
-
 end
