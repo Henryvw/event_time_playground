@@ -30,8 +30,12 @@ class Event < ApplicationRecord
   def self.slotify(openings)
     openings.map do |open_event|
       (open_event.starts_at.to_i...open_event.ends_at.to_i).step(30.minutes).map do |time_slot|
-        Time.zone.at(time_slot)
+        format_into_hour_string(Time.zone.at(time_slot))
       end
     end
+  end
+
+  def self.format_into_hour_string(time)
+    time.strftime('%-k:%M')
   end
 end
