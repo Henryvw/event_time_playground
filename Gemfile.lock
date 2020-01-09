@@ -82,7 +82,7 @@ GEM
     i18n (1.8.1)
       concurrent-ruby (~> 1.0)
     io-like (0.3.0)
-    jaro_winkler (1.5.3)
+    jaro_winkler (1.5.4)
     jbuilder (2.9.1)
       activesupport (>= 4.2.0)
     listen (3.1.5)
@@ -105,8 +105,8 @@ GEM
     nio4r (2.5.2)
     nokogiri (1.10.7)
       mini_portile2 (~> 2.4.0)
-    parallel (1.17.0)
-    parser (2.6.4.0)
+    parallel (1.19.1)
+    parser (2.7.0.2)
       ast (~> 2.4.0)
     psych (3.1.0)
     public_suffix (4.0.3)
@@ -230,7 +230,7 @@ DEPENDENCIES
   web-console (>= 3.3.0)
 
 RUBY VERSION
-   ruby 2.6.2p47
+   ruby 2.6.5p114
 
 BUNDLED WITH
-   2.0.2
+   1.17.3
