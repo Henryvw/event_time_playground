@@ -5,6 +5,9 @@ class Event < ApplicationRecord
   scope :openings, -> { where(kind: 'opening') }
   scope :appointments, -> { where(kind: 'appointment') }
   scope :next_n_days, ->(given_day, n_days_in_future) { where('starts_at > ? AND starts_at < ?', given_day, n_days_in_future) }
+  # To-Do: I want to use %D to be more specific about the date,
+  # but can't get the format to work with the scope query.
+  scope :for_given_day, ->(given_day) { where("strftime('%j', starts_at) = strftime('%j', ?)", given_day) }
 
   def self.availabilities(customers_date)
     Array.new(7) do |day|
@@ -14,5 +17,9 @@ class Event < ApplicationRecord
         slots: find_available_slots(next_day)
       }
     end
+  end
+
+  def self.find_available_slots(given_day)
+    nonrecurring_openings = Event.for_given_day(given_day.to_date).openings
   end
 end
