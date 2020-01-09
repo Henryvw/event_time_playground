@@ -25,6 +25,7 @@ class Event < ApplicationRecord
     weekly_recurring_openings = Event.recurs_weekly(given_day).openings
     all_upcoming_openings = nonrecurring_openings + weekly_recurring_openings
     available_slots = slotify(all_upcoming_openings).flatten(1)
+    available_slots - compare_against_appointments(given_day)
   end
 
   def self.slotify(openings)
@@ -37,5 +38,12 @@ class Event < ApplicationRecord
 
   def self.format_into_hour_string(time)
     time.strftime('%-k:%M')
+  end
+
+  def self.compare_against_appointments(given_day)
+    nonrecurring_appointments = Event.for_given_day(given_day).appointments
+    weekly_recurring_appointments = Event.recurs_weekly(given_day).appointments
+    all_upcoming_appointments = nonrecurring_appointments + weekly_recurring_appointments
+    all_appointment_slots = slotify(all_upcoming_appointments).flatten(1)
   end
 end
