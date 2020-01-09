@@ -10,7 +10,6 @@ class EventTest < ActiveSupport::TestCase
     Event.create kind: 'opening', starts_at: DateTime.parse("2014-08-13 09:30"), ends_at: DateTime.parse("2014-08-04 12:30"), weekly_recurring: true
 
     availabilities = Event.availabilities(DateTime.parse("2014-08-10"))
-    binding.pry
     assert_equal '2014/08/10', availabilities[0][:date]
     assert_equal [], availabilities[0][:slots]
     assert_equal '2014/08/11', availabilities[1][:date]
