@@ -8,6 +8,7 @@ class Event < ApplicationRecord
   # To-Do: I want to use %D to be more specific about the date,
   # but can't get the format to work with the scope query.
   scope :for_given_day, ->(given_day) { where("strftime('%j', starts_at) = strftime('%j', ?)", given_day) }
+  scope :recurs_weekly, ->(given_day) { where("weekly_recurring = true AND strftime('%w', starts_at) = strftime('%w', ?)", given_day) }
 
   def self.availabilities(customers_date)
     Array.new(7) do |day|
@@ -21,5 +22,7 @@ class Event < ApplicationRecord
 
   def self.find_available_slots(given_day)
     nonrecurring_openings = Event.for_given_day(given_day.to_date).openings
+    weekly_recurring_openings = Event.recurs_weekly(given_day).openings
+    all_upcoming_openings = nonrecurring_openings + weekly_recurring_openings
   end
 end
