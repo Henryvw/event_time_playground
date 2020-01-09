@@ -24,5 +24,14 @@ class Event < ApplicationRecord
     nonrecurring_openings = Event.for_given_day(given_day.to_date).openings
     weekly_recurring_openings = Event.recurs_weekly(given_day).openings
     all_upcoming_openings = nonrecurring_openings + weekly_recurring_openings
+    available_slots = slotify(all_upcoming_openings).flatten(1)
+  end
+
+  def self.slotify(openings)
+    openings.map do |open_event|
+      (open_event.starts_at.to_i...open_event.ends_at.to_i).step(30.minutes).map do |time_slot|
+        Time.at(time_slot)
+      end
+    end
   end
 end
